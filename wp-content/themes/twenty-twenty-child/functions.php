@@ -20,4 +20,20 @@ function child_theme_enqueue_styles() {
     }
 }
 add_action('wp_head','hide_admin_side_bar'); 
+
+function shocode_filter($post){
+    $gallary =  do_shortcode('[gallary_product_post id="'. $post->ID.'"]');
+    $price =  do_shortcode('[display_product_price id="'. $post->ID.'"]'); 
+    
+    return $gallary . $price;
+}
+
+add_filter( 'the_product_content', 'shocode_filter', 10,1 );
+
+function shotcode_title($post){
+    $title = do_shortcode('[display_main_title id="'. $post->ID.'" sinular="sinular"]');
+    return $title;
+}
+
+add_filter( 'the_title', 'shotcode_title', 10, 1);
 ?>
